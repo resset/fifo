@@ -14,6 +14,7 @@ typedef struct {
     uint8_t *buffer;
     uint16_t first;
     uint16_t last;
+    uint16_t size;
 } fifo_t;
 
 fifo_result_t fifo_init(fifo_t *fifo, uint8_t *buffer, uint16_t size);
@@ -23,6 +24,7 @@ uint8_t fifo_pop(fifo_t *fifo);
 uint8_t* fifo_pop_multiple(fifo_t *fifo, uint16_t size);
 fifo_result_t fifo_is_empty(fifo_t *fifo);
 fifo_result_t fifo_is_full(fifo_t *fifo);
+uint16_t fifo_length(fifo_t *fifo);
 fifo_result_t fifo_search(fifo_t *fifo, uint8_t data);
 
 #endif /* _FIFO_H_ */
