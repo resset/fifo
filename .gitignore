@@ -1,3 +1,5 @@
 *.d
 *.o
-test/test
+test/Unity
+test/test_naive
+test/test.out

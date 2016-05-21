@@ -1,34 +1,64 @@
-# Makefile from: http://scottmcpeak.com/autodepend/autodepend.html
+# ==========================================
+#   Unity Project - A Test Framework for C
+#   Copyright (c) 2007 Mike Karlesky, Mark VanderVoord, Greg Williams
+#   [Released under MIT License. Please refer to license.txt for details]
+# ==========================================
 
-CFLAGS = -std=c99 -Wpedantic -Wall -Wshadow -Wextra
+#We try to detect the OS we are running on, and adjust commands as needed
+ifeq ($(OSTYPE),cygwin)
+	CLEANUP = rm -f
+	MKDIR = mkdir -p
+	TARGET_EXTENSION=.out
+elseifeq ($(OSTYPE),msys)
+    CLEANUP = rm -f
+	MKDIR = mkdir -p
+	TARGET_EXTENSION=.exe
+elseifeq ($(OS),Windows_NT)
+	CLEANUP = del /F /Q
+	MKDIR = mkdir
+	TARGET_EXTENSION=.exe
+else
+	CLEANUP = rm -f
+	MKDIR = mkdir -p
+	TARGET_EXTENSION=.out
+endif
 
-PROJECT = test
-OBJS := ../fifo.o test.o
+UNITY_ROOT=./Unity
+C_COMPILER=gcc
 
-# Link
-$(PROJECT): $(OBJS)
-	gcc $(OBJS) -o $(PROJECT)
+CFLAGS = -std=c99
+CFLAGS += -Wall
+CFLAGS += -Wextra
+CFLAGS += -Werror
+CFLAGS += -Wpointer-arith
+CFLAGS += -Wcast-align
+CFLAGS += -Wwrite-strings
+CFLAGS += -Wswitch-default
+CFLAGS += -Wunreachable-code
+CFLAGS += -Winit-self
+CFLAGS += -Wmissing-field-initializers
+CFLAGS += -Wno-unknown-pragmas
+CFLAGS += -Wstrict-prototypes
+CFLAGS += -Wundef
+CFLAGS += -Wold-style-definition
+CFLAGS += -Wmissing-prototypes
+CFLAGS += -Wmissing-declarations
+CFLAGS += -Wpedantic
 
-# Pull in dependency info for *existing* .o files
--include $(OBJS:.o=.d)
+TARGET_BASE1=test
+TARGET1 = $(TARGET_BASE1)$(TARGET_EXTENSION)
+SRC_FILES1=\
+  $(UNITY_ROOT)/src/unity.c \
+  ../fifo.c \
+  ./test.c
+INC_DIRS=-I../ -I./ -I$(UNITY_ROOT)/src
+SYMBOLS=
 
-# Rompile and generate dependency info;
-# more complicated dependency computation, so all prereqs listed
-# will also become command-less, prereq-less targets
-#   sed:    strip the target (everything before colon)
-#   sed:    remove any continuation backslashes
-#   fmt -1: list words one per line
-#   sed:    strip leading spaces
-#   sed:    add trailing colons
-%.o: %.c
-	gcc -c $(CFLAGS) $*.c -o $*.o
-	gcc -MM $(CFLAGS) $*.c > $*.d
-	@mv -f $*.d $*.d.tmp
-	@sed -e 's|.*:|$*.o:|' < $*.d.tmp > $*.d
-	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | \
-	  sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
-	@rm -f $*.d.tmp
+all: clean default
 
-# Remove compilation products
+default:
+	$(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES1) -o $(TARGET1)
+	./$(TARGET1)
+
 clean:
-	rm -f $(PROJECT) *.o *.d ../*.o ../*.d
+	$(CLEANUP) $(TARGET1)
