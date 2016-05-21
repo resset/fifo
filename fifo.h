@@ -12,9 +12,9 @@ typedef enum {
 
 typedef struct {
     uint8_t *buffer;
-    uint16_t first;
-    uint16_t last;
     uint16_t size;
+    uint16_t first;
+    uint16_t elements_n;
 } fifo_t;
 
 fifo_result_t fifo_init(fifo_t *fifo, uint8_t *buffer, uint16_t size);

@@ -5,11 +5,11 @@
 
 fifo_result_t fifo_init(fifo_t *fifo, uint8_t *buffer, uint16_t size)
 {
-    if (NULL != fifo && NULL != buffer && UINT16_MAX > size && 0 < size) {
+    if (NULL != fifo && NULL != buffer && 0 < size) {
         fifo->buffer = buffer;
+        fifo->size = size;
         fifo->first = 0;
-        fifo->last = 0;
-        fifo->size = size + 1;
+        fifo->elements_n = 0;
 
         return FIFO_SUCCESS;
     } else {
@@ -20,8 +20,8 @@ fifo_result_t fifo_init(fifo_t *fifo, uint8_t *buffer, uint16_t size)
 fifo_result_t fifo_push(fifo_t *fifo, uint8_t data)
 {
     if (FIFO_FALSE == fifo_is_full(fifo)) {
-        fifo->buffer[fifo->last] = data;
-        fifo->last = (fifo->last + 1) % fifo->size;
+        fifo->buffer[(fifo->first + fifo->elements_n) % fifo->size] = data;
+        ++fifo->elements_n;
         return FIFO_SUCCESS;
     } else {
         return FIFO_ERROR;
@@ -46,6 +46,7 @@ uint8_t fifo_pop(fifo_t *fifo)
     if (FIFO_FALSE == fifo_is_empty(fifo)) {
         data = fifo->buffer[fifo->first];
         fifo->first = (fifo->first + 1) % fifo->size;
+        --fifo->elements_n;
     }
 
     return data;
@@ -63,7 +64,7 @@ uint8_t* fifo_pop_multiple(fifo_t *fifo, uint16_t size)
 
 fifo_result_t fifo_is_empty(fifo_t *fifo)
 {
-    if (fifo->first == fifo->last) {
+    if (0 == fifo->elements_n) {
         return FIFO_TRUE;
     } else {
         return FIFO_FALSE;
@@ -72,7 +73,7 @@ fifo_result_t fifo_is_empty(fifo_t *fifo)
 
 fifo_result_t fifo_is_full(fifo_t *fifo)
 {
-    if (fifo->size - 1 == (fifo->size + fifo->last - fifo->first) % fifo->size) {
+    if (fifo->size == fifo->elements_n) {
         return FIFO_TRUE;
     } else {
         return FIFO_FALSE;
@@ -81,7 +82,7 @@ fifo_result_t fifo_is_full(fifo_t *fifo)
 
 inline uint16_t fifo_count_elements(fifo_t *fifo)
 {
-    return (fifo->size + fifo->last - fifo->first) % fifo->size;
+    return fifo->elements_n;
 }
 
 fifo_result_t fifo_search(fifo_t *fifo, uint8_t data)
