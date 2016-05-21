@@ -43,8 +43,10 @@ uint8_t fifo_pop(fifo_t *fifo)
 {
     uint8_t data = 0;
 
-    data = fifo->buffer[fifo->first];
-    fifo->first = (fifo->first + 1) % fifo->size;
+    if (FIFO_FALSE == fifo_is_empty(fifo)) {
+        data = fifo->buffer[fifo->first];
+        fifo->first = (fifo->first + 1) % fifo->size;
+    }
 
     return data;
 }
@@ -77,15 +79,15 @@ fifo_result_t fifo_is_full(fifo_t *fifo)
     }
 }
 
-uint16_t fifo_count_elements(fifo_t *fifo)
+inline uint16_t fifo_count_elements(fifo_t *fifo)
 {
     return (fifo->size + fifo->last - fifo->first) % fifo->size;
 }
 
 fifo_result_t fifo_search(fifo_t *fifo, uint8_t data)
 {
-    for (uint16_t i; fifo->size > i; ++i) {
-        if (data == fifo->buffer[i]) {
+    for (uint16_t i = 0; fifo_count_elements(fifo) > i; ++i) {
+        if (data == fifo->buffer[(fifo->first + i) % fifo->size]) {
             return FIFO_TRUE;
         }
     }
