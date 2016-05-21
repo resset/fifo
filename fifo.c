@@ -5,11 +5,6 @@
 
 fifo_result_t fifo_init(fifo_t *fifo, uint8_t *buffer, uint16_t size)
 {
-    /*
-     * Maximum value of size is UINT16_MAX - 1. This is due to the fact that
-     * we often add 1 to the first/last counters and we do not want them
-     * to overflow.
-     */
     if (NULL != fifo && NULL != buffer && UINT16_MAX > size && 0 < size) {
         fifo->buffer = buffer;
         fifo->first = 0;
@@ -39,6 +34,8 @@ fifo_result_t fifo_push_multiple(fifo_t *fifo, uint8_t *data, uint16_t size)
     (void)data;
     (void)size;
 
+    /* TODO */
+
     return FIFO_SUCCESS;
 }
 
@@ -57,6 +54,8 @@ uint8_t* fifo_pop_multiple(fifo_t *fifo, uint16_t size)
     (void)fifo;
     (void)size;
 
+    /* TODO */
+
     return fifo->buffer;
 }
 
@@ -71,16 +70,16 @@ fifo_result_t fifo_is_empty(fifo_t *fifo)
 
 fifo_result_t fifo_is_full(fifo_t *fifo)
 {
-    (void)fifo;
-
-    /* TODO */
-    return FIFO_FALSE;
+    if (fifo->size - 1 == (fifo->size + fifo->last - fifo->first) % fifo->size) {
+        return FIFO_TRUE;
+    } else {
+        return FIFO_FALSE;
+    }
 }
 
-uint16_t fifo_length(fifo_t *fifo) {
-    (void)fifo;
-
-    return 0;
+uint16_t fifo_count_elements(fifo_t *fifo)
+{
+    return (fifo->size + fifo->last - fifo->first) % fifo->size;
 }
 
 fifo_result_t fifo_search(fifo_t *fifo, uint8_t data)
