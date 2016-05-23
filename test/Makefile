@@ -44,21 +44,25 @@ CFLAGS += -Wold-style-definition
 CFLAGS += -Wmissing-prototypes
 CFLAGS += -Wmissing-declarations
 CFLAGS += -Wpedantic
+CFLAGS += -DUNITY_FIXTURES
 
-TARGET_BASE1=test
+TARGET_BASE1=all_tests
 TARGET1 = $(TARGET_BASE1)$(TARGET_EXTENSION)
 SRC_FILES1=\
   $(UNITY_ROOT)/src/unity.c \
+  $(UNITY_ROOT)/extras/fixture/src/unity_fixture.c \
   ../fifo.c \
-  ./test.c
-INC_DIRS=-I../ -I./ -I$(UNITY_ROOT)/src
+  ./test_fifo_initializations.c \
+  ./test_runners/test_fifo_initializations_runner.c \
+  ./test_runners/all_tests.c
+INC_DIRS=-I../ -I./ -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 SYMBOLS=
 
 all: clean default
 
 default:
 	$(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES1) -o $(TARGET1)
-	./$(TARGET1)
+	./$(TARGET1) -v
 
 clean:
 	$(CLEANUP) $(TARGET1)

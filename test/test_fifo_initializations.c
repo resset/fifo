@@ -2,30 +2,29 @@
 
 #include "fifo.h"
 #include "unity.h"
-#include "test.h"
+#include "unity_fixture.h"
+
+TEST_GROUP(fifo_initializations);
 
 static fifo_t fifo;
 static const uint16_t SIZE = UINT16_MAX;
 static uint8_t buffer[UINT16_MAX];
 
-void setUp(void)
-{
-    if (FIFO_SUCCESS != fifo_init(&fifo, buffer, SIZE)) {
-        TEST_FAIL_MESSAGE("Cannot init fifo.");
-    }
-}
-
-void tearDown(void)
+TEST_SETUP(fifo_initializations)
 {
 }
 
-void test_basics(void)
+TEST_TEAR_DOWN(fifo_initializations)
+{
+}
+
+TEST(fifo_initializations, test_basics)
 {
     TEST_ASSERT_FALSE(FIFO_TRUE == FIFO_FALSE);
     TEST_ASSERT_FALSE(FIFO_SUCCESS == FIFO_ERROR);
 }
 
-void test_fifo_init(void)
+TEST(fifo_initializations, test_fifo_init)
 {
     /* Initialization errors. */
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_init(NULL, buffer, SIZE));
@@ -54,12 +53,4 @@ void test_fifo_init(void)
 
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_init(&fifo, buffer, UINT16_MAX));
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_init(&fifo, buffer, INT8_MIN));
-}
-
-int main(void)
-{
-    UNITY_BEGIN();
-    RUN_TEST(test_basics);
-    RUN_TEST(test_fifo_init);
-    return UNITY_END();
 }
