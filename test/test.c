@@ -4,9 +4,9 @@
 #include "unity.h"
 #include "test.h"
 
-fifo_t fifo;
-const uint16_t SIZE = UINT16_MAX;
-uint8_t buffer[UINT16_MAX];
+static fifo_t fifo;
+static const uint16_t SIZE = UINT16_MAX;
+static uint8_t buffer[UINT16_MAX];
 
 void setUp(void)
 {
