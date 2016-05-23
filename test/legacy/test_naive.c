@@ -1,7 +1,7 @@
 # include <inttypes.h>
 # include <stdio.h>
 
-#include "../fifo.h"
+#include "../../fifo.h"
 
 int main(void)
 {

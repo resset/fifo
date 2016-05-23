@@ -3,7 +3,7 @@
 CFLAGS = -std=c99 -Wpedantic -Wall -Wshadow -Wextra
 
 PROJECT = test_naive
-OBJS := ../fifo.o test_naive.o
+OBJS := ../../fifo.o test_naive.o
 
 # Link
 $(PROJECT): $(OBJS)
@@ -31,4 +31,4 @@ $(PROJECT): $(OBJS)
 
 # Remove compilation products
 clean:
-	rm -f $(PROJECT) *.o *.d ../*.o ../*.d
+	rm -f $(PROJECT) *.o *.d ../../*.o ../../*.d

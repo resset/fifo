@@ -1,5 +1,5 @@
 *.d
 *.o
 test/Unity
-test/test_naive
+test/legacy/test_naive
 test/all_tests.out
