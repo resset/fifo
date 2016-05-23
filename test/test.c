@@ -19,6 +19,12 @@ void tearDown(void)
 {
 }
 
+void test_basics(void)
+{
+    TEST_ASSERT_FALSE(FIFO_TRUE == FIFO_FALSE);
+    TEST_ASSERT_FALSE(FIFO_SUCCESS == FIFO_ERROR);
+}
+
 void test_fifo_init(void)
 {
     /* Initialization errors. */
@@ -53,6 +59,7 @@ void test_fifo_init(void)
 int main(void)
 {
     UNITY_BEGIN();
+    RUN_TEST(test_basics);
     RUN_TEST(test_fifo_init);
     return UNITY_END();
 }
