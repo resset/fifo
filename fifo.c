@@ -3,7 +3,7 @@
 
 #include "fifo.h"
 
-fifo_result_t fifo_init(fifo_t *fifo, uint8_t *buffer, uint16_t size)
+fifo_result_t fifo_init(fifo_t * fifo, uint8_t * buffer, uint16_t size)
 {
     if (NULL != fifo && NULL != buffer && 0 < size) {
         fifo->buffer = buffer;
@@ -17,7 +17,7 @@ fifo_result_t fifo_init(fifo_t *fifo, uint8_t *buffer, uint16_t size)
     }
 }
 
-fifo_result_t fifo_push(fifo_t *fifo, uint8_t data)
+fifo_result_t fifo_push(fifo_t * fifo, uint8_t data)
 {
     if (FIFO_FALSE == fifo_is_full(fifo)) {
         fifo->buffer[(fifo->first + fifo->elements_n) % fifo->size] = data;
@@ -28,7 +28,7 @@ fifo_result_t fifo_push(fifo_t *fifo, uint8_t data)
     }
 }
 
-fifo_result_t fifo_push_multiple(fifo_t *fifo, uint8_t *data, uint16_t size)
+fifo_result_t fifo_push_multiple(fifo_t * fifo, uint8_t * data, uint16_t size)
 {
     (void)fifo;
     (void)data;
@@ -39,7 +39,7 @@ fifo_result_t fifo_push_multiple(fifo_t *fifo, uint8_t *data, uint16_t size)
     return FIFO_SUCCESS;
 }
 
-uint8_t fifo_pop(fifo_t *fifo)
+uint8_t fifo_pop(fifo_t * fifo)
 {
     uint8_t data = 0;
 
@@ -52,7 +52,7 @@ uint8_t fifo_pop(fifo_t *fifo)
     return data;
 }
 
-uint8_t* fifo_pop_multiple(fifo_t *fifo, uint16_t size)
+uint8_t *fifo_pop_multiple(fifo_t * fifo, uint16_t size)
 {
     (void)fifo;
     (void)size;
@@ -62,7 +62,7 @@ uint8_t* fifo_pop_multiple(fifo_t *fifo, uint16_t size)
     return fifo->buffer;
 }
 
-fifo_result_t fifo_is_empty(fifo_t *fifo)
+fifo_result_t fifo_is_empty(fifo_t * fifo)
 {
     if (0 == fifo->elements_n) {
         return FIFO_TRUE;
@@ -71,7 +71,7 @@ fifo_result_t fifo_is_empty(fifo_t *fifo)
     }
 }
 
-fifo_result_t fifo_is_full(fifo_t *fifo)
+fifo_result_t fifo_is_full(fifo_t * fifo)
 {
     if (fifo->size == fifo->elements_n) {
         return FIFO_TRUE;
@@ -80,12 +80,12 @@ fifo_result_t fifo_is_full(fifo_t *fifo)
     }
 }
 
-inline uint16_t fifo_count_elements(fifo_t *fifo)
+inline uint16_t fifo_count_elements(fifo_t * fifo)
 {
     return fifo->elements_n;
 }
 
-fifo_result_t fifo_search(fifo_t *fifo, uint8_t data)
+fifo_result_t fifo_search(fifo_t * fifo, uint8_t data)
 {
     for (uint16_t i = 0; fifo_count_elements(fifo) > i; ++i) {
         if (data == fifo->buffer[(fifo->first + i) % fifo->size]) {
