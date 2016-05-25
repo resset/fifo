@@ -39,12 +39,14 @@ TEST(fifo_initializations, test_fifo_init)
     /* Now some positive tests. */
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_init(&fifo, buffer, SIZE));
     TEST_ASSERT_NOT_NULL(fifo.buffer);
+    TEST_ASSERT_TRUE(buffer == fifo.buffer);
     TEST_ASSERT_EQUAL_UINT16(SIZE, fifo.size);
     TEST_ASSERT_EQUAL_UINT16(0, fifo.first);
     TEST_ASSERT_EQUAL_UINT16(0, fifo.elements_n);
 
     /* Multiple initialization is not an error. */
-    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_init(&fifo, buffer, SIZE));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_init(&fifo, buffer, SIZE / 2));
+    TEST_ASSERT_EQUAL_UINT16(SIZE / 2, fifo.size);
 
     /* -1 will be casted to uint16_t and will result in 65535
      * which is correct value.
