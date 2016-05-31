@@ -6,15 +6,8 @@
 
 TEST_GROUP(fifo_operations);
 
-static fifo_t fifo;
-static const uint16_t SIZE = UINT16_MAX;
-static uint8_t buffer[UINT16_MAX];
-
 TEST_SETUP(fifo_operations)
 {
-    if (FIFO_ERROR == fifo_init(&fifo, buffer, SIZE)) {
-        TEST_FAIL_MESSAGE("Error while initializing FIFO.");
-    }
 }
 
 TEST_TEAR_DOWN(fifo_operations)
@@ -81,6 +74,13 @@ TEST(fifo_operations, test_push_overfill_buffer)
 
 TEST(fifo_operations, test_push_overfill_large_buffer)
 {
+    fifo_t fifo;
+    const uint16_t SIZE = UINT16_MAX;
+    uint8_t buffer[SIZE];
+
+    if (FIFO_ERROR == fifo_init(&fifo, buffer, SIZE)) {
+        TEST_FAIL_MESSAGE("Error while initializing FIFO.");
+    }
 
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x5A));
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x4B));
