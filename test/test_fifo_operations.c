@@ -82,20 +82,16 @@ TEST(fifo_operations, test_push_overfill_large_buffer)
         TEST_FAIL_MESSAGE("Error while initializing FIFO.");
     }
 
-    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x5A));
-    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x4B));
-    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x3C));
-    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x2D));
-    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x1E));
+    for (uint16_t i = 0; i < UINT16_MAX; i++) {
+        TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, (uint8_t)(i & 0xFF)));
+    }
 
     /* This push should fail. */
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push(&fifo, 0x0F));
 
-    TEST_ASSERT_EQUAL_HEX8(0x5A, fifo.buffer[0]);
-    TEST_ASSERT_EQUAL_HEX8(0x4B, fifo.buffer[1]);
-    TEST_ASSERT_EQUAL_HEX8(0x3C, fifo.buffer[2]);
-    TEST_ASSERT_EQUAL_HEX8(0x2D, fifo.buffer[3]);
-    TEST_ASSERT_EQUAL_HEX8(0x1E, fifo.buffer[4]);
+    for (uint16_t i = 0; i < UINT16_MAX; i++) {
+        TEST_ASSERT_EQUAL_HEX8((uint8_t)(i & 0xFF), fifo.buffer[i]);
+    }
 }
 
 TEST(fifo_operations, test_ef)
