@@ -4,27 +4,27 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-TEST_GROUP(fifo_initializations);
+TEST_GROUP(test_fifo_init);
 
 static fifo_t fifo;
 static const uint16_t SIZE = UINT16_MAX;
 static uint8_t buffer[UINT16_MAX];
 
-TEST_SETUP(fifo_initializations)
+TEST_SETUP(test_fifo_init)
 {
 }
 
-TEST_TEAR_DOWN(fifo_initializations)
+TEST_TEAR_DOWN(test_fifo_init)
 {
 }
 
-TEST(fifo_initializations, test_basics)
+TEST(test_fifo_init, test_basic_asserts)
 {
     TEST_ASSERT_FALSE(FIFO_TRUE == FIFO_FALSE);
     TEST_ASSERT_FALSE(FIFO_SUCCESS == FIFO_ERROR);
 }
 
-TEST(fifo_initializations, test_fifo_init)
+TEST(test_fifo_init, test_fifo_init)
 {
     /* Initialization errors. */
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_init(NULL, buffer, SIZE));

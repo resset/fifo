@@ -4,17 +4,17 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-TEST_GROUP(fifo_operations);
+TEST_GROUP(test_fifo_push);
 
-TEST_SETUP(fifo_operations)
+TEST_SETUP(test_fifo_push)
 {
 }
 
-TEST_TEAR_DOWN(fifo_operations)
+TEST_TEAR_DOWN(test_fifo_push)
 {
 }
 
-TEST(fifo_operations, test_push_one_byte)
+TEST(test_fifo_push, test_push_one_byte)
 {
     fifo_t fifo;
     const uint16_t SIZE = 5;
@@ -27,7 +27,7 @@ TEST(fifo_operations, test_push_one_byte)
     TEST_ASSERT_EQUAL_HEX8(0x5A, fifo.buffer[0]);
 }
 
-TEST(fifo_operations, test_push_fill_buffer)
+TEST(test_fifo_push, test_push_fill_buffer)
 {
     fifo_t fifo;
     const uint16_t SIZE = 5;
@@ -48,7 +48,7 @@ TEST(fifo_operations, test_push_fill_buffer)
     TEST_ASSERT_EQUAL_HEX8(0x1E, fifo.buffer[4]);
 }
 
-TEST(fifo_operations, test_push_overfill_buffer)
+TEST(test_fifo_push, test_push_overfill_buffer)
 {
     fifo_t fifo;
     const uint16_t SIZE = 5;
@@ -72,7 +72,7 @@ TEST(fifo_operations, test_push_overfill_buffer)
     TEST_ASSERT_EQUAL_HEX8(0x1E, fifo.buffer[4]);
 }
 
-TEST(fifo_operations, test_push_overfill_large_buffer)
+TEST(test_fifo_push, test_push_overfill_large_buffer)
 {
     fifo_t fifo;
     const uint16_t SIZE = UINT16_MAX;
@@ -94,7 +94,7 @@ TEST(fifo_operations, test_push_overfill_large_buffer)
     }
 }
 
-TEST(fifo_operations, test_ef)
+TEST(test_fifo_push, test_ef)
 {
     fifo_t ef_fifo;
     const uint16_t EF_SIZE = UINT16_MAX;
