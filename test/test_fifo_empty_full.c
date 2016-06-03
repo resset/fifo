@@ -48,9 +48,11 @@ TEST(test_fifo_empty_full, test_empty_full_small_buffer)
     TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_empty(&fifo));
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_full(&fifo));
 
+    uint8_t tmp;
     for (uint16_t i = SIZE; i > 0; i--) {
-        fifo_pop(&fifo);
+        TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
     }
+    (void)tmp;
 
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_empty(&fifo));
     TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_full(&fifo));
@@ -63,8 +65,9 @@ TEST(test_fifo_empty_full, test_empty_full_small_buffer_not_from_zero_index)
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0xB4));
 
     /* And now we pull data back from the queue. */
-    fifo_pop(&fifo);
-    fifo_pop(&fifo);
+    uint8_t tmp;
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
 
     /* Then it's the same as in test_empty_full_small_buffer. */
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_empty(&fifo));
@@ -93,8 +96,9 @@ TEST(test_fifo_empty_full, test_empty_full_small_buffer_not_from_zero_index)
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_full(&fifo));
 
     for (uint16_t i = SIZE; i > 0; i--) {
-        fifo_pop(&fifo);
+        TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
     }
+    (void)tmp;
 
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_empty(&fifo));
     TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_full(&fifo));
@@ -138,9 +142,11 @@ TEST(test_fifo_empty_full, test_empty_full_large_buffer)
     TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_empty(&fifo));
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_full(&fifo));
 
+    uint8_t tmp;
     for (uint16_t i = UINT16_MAX; i > 0; i--) {
-        fifo_pop(&fifo);
+        TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
     }
+    (void)tmp;
 
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_empty(&fifo));
     TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_full(&fifo));
@@ -162,8 +168,9 @@ TEST(test_fifo_empty_full, test_empty_full_large_buffer_not_from_zero_index)
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0xB4));
 
     /* And now we pull data back from the queue. */
-    fifo_pop(&fifo);
-    fifo_pop(&fifo);
+    uint8_t tmp;
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
 
     /* Then it's the same as in test_empty_full_small_buffer_not_from_zero_index. */
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_empty(&fifo));
@@ -195,8 +202,9 @@ TEST(test_fifo_empty_full, test_empty_full_large_buffer_not_from_zero_index)
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_full(&fifo));
 
     for (uint16_t i = UINT16_MAX; i > 0; i--) {
-        fifo_pop(&fifo);
+        TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
     }
+    (void)tmp;
 
     TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_empty(&fifo));
     TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_full(&fifo));

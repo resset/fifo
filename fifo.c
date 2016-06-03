@@ -39,17 +39,17 @@ fifo_result_t fifo_push_multiple(fifo_t * fifo, uint8_t * data, uint16_t size)
     return FIFO_SUCCESS;
 }
 
-uint8_t fifo_pop(fifo_t * fifo)
+fifo_result_t fifo_pop(fifo_t * fifo, uint8_t * data)
 {
-    uint8_t data = 0;
-
     if (FIFO_FALSE == fifo_is_empty(fifo)) {
-        data = fifo->buffer[fifo->first];
+        *data = fifo->buffer[fifo->first];
         fifo->first = (fifo->first + 1) % fifo->size;
         --fifo->elements_n;
-    }
 
-    return data;
+        return FIFO_SUCCESS;
+    } else {
+        return FIFO_ERROR;
+    }
 }
 
 uint8_t *fifo_pop_multiple(fifo_t * fifo, uint16_t size)

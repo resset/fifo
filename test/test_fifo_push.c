@@ -92,9 +92,11 @@ TEST(test_fifo_push, test_push_fill_buffer_not_from_zero_index)
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x5A));
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x4B));
 
-    /* And now we pull data back from queue. */
-    fifo_pop(&fifo);
-    fifo_pop(&fifo);
+    /* And now we pull data back from the queue. */
+    uint8_t tmp;
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop(&fifo, &tmp));
+    (void)tmp;
 
     /* We still should have 5 empty places albeit not starting from index 0. */
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x5A));
