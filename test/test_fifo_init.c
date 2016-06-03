@@ -22,6 +22,9 @@ TEST(test_fifo_init, test_basic_asserts)
 {
     TEST_ASSERT_FALSE(FIFO_TRUE == FIFO_FALSE);
     TEST_ASSERT_FALSE(FIFO_SUCCESS == FIFO_ERROR);
+
+    TEST_ASSERT_TRUE(FIFO_TRUE != FIFO_SUCCESS);
+    TEST_ASSERT_TRUE(FIFO_FALSE != FIFO_ERROR);
 }
 
 TEST(test_fifo_init, test_fifo_init)
