@@ -113,38 +113,3 @@ TEST(test_fifo_push, test_push_fill_buffer_not_from_zero_index)
     TEST_ASSERT_EQUAL_HEX8(0x2D, fifo.buffer[0]);
     TEST_ASSERT_EQUAL_HEX8(0x1E, fifo.buffer[1]);
 }
-
-TEST(test_fifo_push, test_empty_full)
-{
-    TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_empty(&fifo));
-    TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_full(&fifo));
-
-    fifo_push(&fifo, 0);
-
-    TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_empty(&fifo));
-    TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_full(&fifo));
-
-    for (uint16_t i = 1; i < SIZE - 1; i++) {
-        fifo_push(&fifo, i);
-    }
-
-    TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_empty(&fifo));
-    TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_full(&fifo));
-
-    fifo_push(&fifo, SIZE - 1);
-
-    TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_empty(&fifo));
-    TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_full(&fifo));
-
-    fifo_push(&fifo, SIZE);
-
-    TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_empty(&fifo));
-    TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_full(&fifo));
-
-    for (uint16_t i = SIZE; i > 0; i--) {
-        fifo_pop(&fifo);
-    }
-
-    TEST_ASSERT_TRUE(FIFO_TRUE == fifo_is_empty(&fifo));
-    TEST_ASSERT_TRUE(FIFO_FALSE == fifo_is_full(&fifo));
-}

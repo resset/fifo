@@ -54,8 +54,10 @@ SRC_FILES1=\
   ../fifo.c \
   ./test_fifo_init.c \
   ./test_fifo_push.c \
+  ./test_fifo_empty_full.c \
   ./test_runners/test_fifo_init_runner.c \
   ./test_runners/test_fifo_push_runner.c \
+  ./test_runners/test_fifo_empty_full_runner.c \
   ./test_runners/all_tests.c
 INC_DIRS=-I../ -I./ -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 SYMBOLS=
