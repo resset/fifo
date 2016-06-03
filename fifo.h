@@ -1,7 +1,7 @@
 #ifndef _FIFO_H_
 #define _FIFO_H_
 
-#include <inttypes.h>
+#include <stdint.h>
 
 typedef enum {
     FIFO_FALSE = 0,
