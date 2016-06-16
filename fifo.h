@@ -21,7 +21,7 @@ fifo_result_t fifo_init(fifo_t * fifo, uint8_t * buffer, uint16_t size);
 fifo_result_t fifo_push(fifo_t * fifo, uint8_t data);
 fifo_result_t fifo_push_multiple(fifo_t * fifo, uint8_t * data, uint16_t size);
 fifo_result_t fifo_pop(fifo_t * fifo, uint8_t * data);
-uint8_t *fifo_pop_multiple(fifo_t * fifo, uint16_t size);
+fifo_result_t fifo_pop_multiple(fifo_t * fifo, uint8_t * data, uint16_t size);
 fifo_result_t fifo_is_empty(fifo_t * fifo);
 fifo_result_t fifo_is_full(fifo_t * fifo);
 uint16_t fifo_count_elements(fifo_t * fifo);

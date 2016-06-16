@@ -52,14 +52,21 @@ fifo_result_t fifo_pop(fifo_t * fifo, uint8_t * data)
     }
 }
 
-uint8_t *fifo_pop_multiple(fifo_t * fifo, uint16_t size)
+fifo_result_t fifo_pop_multiple(fifo_t * fifo, uint8_t * data, uint16_t size)
 {
     (void)fifo;
     (void)size;
 
-    /* TODO */
-
-    return fifo->buffer;
+    if (fifo->elements_n >= size) {
+        while (size--) {
+            *data++ = fifo->buffer[fifo->first];
+            fifo->first = (fifo->first + 1) % fifo->size;
+            --fifo->elements_n;
+        }
+        return FIFO_SUCCESS;
+    } else {
+        return FIFO_ERROR;
+    }
 }
 
 fifo_result_t fifo_is_empty(fifo_t * fifo)
