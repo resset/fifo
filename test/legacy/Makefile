@@ -12,7 +12,7 @@ $(PROJECT): $(OBJS)
 # Pull in dependency info for *existing* .o files
 -include $(OBJS:.o=.d)
 
-# Rompile and generate dependency info;
+# Compile and generate dependency info;
 # more complicated dependency computation, so all prereqs listed
 # will also become command-less, prereq-less targets
 #   sed:    strip the target (everything before colon)
