@@ -8,4 +8,6 @@ TEST_GROUP_RUNNER(test_fifo_push)
     RUN_TEST_CASE(test_fifo_push, test_push_overfill_buffer);
     RUN_TEST_CASE(test_fifo_push, test_push_overfill_large_buffer);
     RUN_TEST_CASE(test_fifo_push, test_push_fill_buffer_not_from_zero_index);
+    RUN_TEST_CASE(test_fifo_push, test_push_multiple);
+    RUN_TEST_CASE(test_fifo_push, test_push_multiple_overfill_buffer);
 }

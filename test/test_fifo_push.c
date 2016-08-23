@@ -117,3 +117,51 @@ TEST(test_fifo_push, test_push_fill_buffer_not_from_zero_index)
     TEST_ASSERT_EQUAL_HEX8(0x2D, fifo.buffer[0]);
     TEST_ASSERT_EQUAL_HEX8(0x1E, fifo.buffer[1]);
 }
+
+TEST(test_fifo_push, test_push_multiple)
+{
+    uint8_t data[] = {8, 7, 6, 5, 4, 3, 2, 1};
+
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push_multiple(&fifo, data, 2));
+
+    TEST_ASSERT_EQUAL_UINT16(2, fifo.elements_n);
+
+    TEST_ASSERT_EQUAL_UINT8(data[0], fifo.buffer[0]);
+    TEST_ASSERT_EQUAL_UINT8(data[1], fifo.buffer[1]);
+
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push_multiple(&fifo, data + 2, 3));
+
+    TEST_ASSERT_EQUAL_UINT16(5, fifo.elements_n);
+
+    TEST_ASSERT_EQUAL_UINT8(data[2], fifo.buffer[2]);
+    TEST_ASSERT_EQUAL_UINT8(data[3], fifo.buffer[3]);
+    TEST_ASSERT_EQUAL_UINT8(data[4], fifo.buffer[4]);
+}
+
+TEST(test_fifo_push, test_push_multiple_overfill_buffer)
+{
+    uint8_t data[] = {3, 7, 6, 2, 5, 4, 1, 8};
+
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push_multiple(&fifo, data, 5));
+
+    TEST_ASSERT_EQUAL_UINT16(5, fifo.elements_n);
+
+    TEST_ASSERT_EQUAL_UINT8(data[0], fifo.buffer[0]);
+    TEST_ASSERT_EQUAL_UINT8(data[1], fifo.buffer[1]);
+    TEST_ASSERT_EQUAL_UINT8(data[2], fifo.buffer[2]);
+    TEST_ASSERT_EQUAL_UINT8(data[3], fifo.buffer[3]);
+    TEST_ASSERT_EQUAL_UINT8(data[4], fifo.buffer[4]);
+
+    /* Adding more than we should. */
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push_multiple(&fifo, data + 5, 2));
+
+    /* Counter should be untouched regardless of previous failure. */
+    TEST_ASSERT_EQUAL_UINT16(5, fifo.elements_n);
+
+    /* Current data should also be untouched. */
+    TEST_ASSERT_EQUAL_UINT8(data[0], fifo.buffer[0]);
+    TEST_ASSERT_EQUAL_UINT8(data[1], fifo.buffer[1]);
+    TEST_ASSERT_EQUAL_UINT8(data[2], fifo.buffer[2]);
+    TEST_ASSERT_EQUAL_UINT8(data[3], fifo.buffer[3]);
+    TEST_ASSERT_EQUAL_UINT8(data[4], fifo.buffer[4]);
+}
