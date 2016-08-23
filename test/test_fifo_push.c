@@ -54,6 +54,7 @@ TEST(test_fifo_push, test_push_overfill_buffer)
     /* This push should fail. */
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push(&fifo, 0x0F));
 
+    /* These should be undamaged. */
     TEST_ASSERT_EQUAL_HEX8(0x5A, fifo.buffer[0]);
     TEST_ASSERT_EQUAL_HEX8(0x4B, fifo.buffer[1]);
     TEST_ASSERT_EQUAL_HEX8(0x3C, fifo.buffer[2]);
@@ -81,6 +82,7 @@ TEST(test_fifo_push, test_push_overfill_large_buffer)
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push(&fifo, 0x1F));
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push(&fifo, 0x2F));
 
+    /* Rest of buffer should be undamaged. */
     for (uint16_t i = 0; i < UINT16_MAX; i++) {
         TEST_ASSERT_EQUAL_HEX8((uint8_t) (i & 0xFF), fifo.buffer[i]);
     }

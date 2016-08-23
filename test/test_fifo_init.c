@@ -27,7 +27,7 @@ TEST(test_fifo_init, test_basic_asserts)
     TEST_ASSERT_TRUE(FIFO_FALSE != FIFO_ERROR);
 }
 
-TEST(test_fifo_init, test_fifo_init)
+TEST(test_fifo_init, test_fifo_init_errors)
 {
     /* Initialization errors. */
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_init(NULL, buffer, SIZE));
@@ -35,10 +35,13 @@ TEST(test_fifo_init, test_fifo_init)
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_init(&fifo, buffer, 0));
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_init(NULL, NULL, 0));
 
-    /* Random initialization errors. */
+    /* Other random initialization errors. */
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_init(&fifo, 0, SIZE));
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_init(0, buffer, SIZE));
+}
 
+TEST(test_fifo_init, test_fifo_init_successes)
+{
     /* Now some positive tests. */
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_init(&fifo, buffer, SIZE));
     TEST_ASSERT_NOT_NULL(fifo.buffer);
