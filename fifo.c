@@ -30,13 +30,15 @@ fifo_result_t fifo_push(fifo_t * fifo, uint8_t data)
 
 fifo_result_t fifo_push_multiple(fifo_t * fifo, uint8_t * data, uint16_t size)
 {
-    (void)fifo;
-    (void)data;
-    (void)size;
-
-    /* TODO */
-
-    return FIFO_SUCCESS;
+    if (fifo->elements_n + size <= fifo->size) {
+        while (size--) {
+            fifo->buffer[(fifo->first + fifo->elements_n) % fifo->size] = *data++;
+            ++fifo->elements_n;
+        }
+        return FIFO_SUCCESS;
+    } else {
+        return FIFO_ERROR;
+    }
 }
 
 fifo_result_t fifo_pop(fifo_t * fifo, uint8_t * data)
