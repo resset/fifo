@@ -56,9 +56,6 @@ fifo_result_t fifo_pop(fifo_t * fifo, uint8_t * data)
 
 fifo_result_t fifo_pop_multiple(fifo_t * fifo, uint8_t * data, uint16_t size)
 {
-    (void)fifo;
-    (void)size;
-
     if (fifo->elements_n >= size) {
         while (size--) {
             *data++ = fifo->buffer[fifo->first];
