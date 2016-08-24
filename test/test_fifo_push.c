@@ -21,6 +21,12 @@ TEST_TEAR_DOWN(test_fifo_push)
 {
 }
 
+TEST(test_fifo_push, test_push_basics)
+{
+    fifo_t * tmp_fifo = NULL;
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push(tmp_fifo, 0));
+}
+
 TEST(test_fifo_push, test_push_one_byte)
 {
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x5A));
@@ -116,6 +122,13 @@ TEST(test_fifo_push, test_push_fill_buffer_not_from_zero_index)
     TEST_ASSERT_EQUAL_HEX8(0x3C, fifo.buffer[4]);
     TEST_ASSERT_EQUAL_HEX8(0x2D, fifo.buffer[0]);
     TEST_ASSERT_EQUAL_HEX8(0x1E, fifo.buffer[1]);
+}
+
+TEST(test_fifo_push, test_push_multiple_basics)
+{
+    fifo_t * tmp_fifo = NULL;
+    uint8_t * tmp_data = NULL;
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push_multiple(tmp_fifo, tmp_data, 0));
 }
 
 TEST(test_fifo_push, test_push_multiple)

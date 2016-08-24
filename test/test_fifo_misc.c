@@ -21,6 +21,12 @@ TEST_TEAR_DOWN(test_fifo_misc)
 {
 }
 
+TEST(test_fifo_misc, test_misc_basics)
+{
+    fifo_t * tmp_fifo = NULL;
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_search(tmp_fifo, 0));
+}
+
 TEST(test_fifo_misc, test_count_elements)
 {
 }

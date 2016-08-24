@@ -21,6 +21,13 @@ TEST_TEAR_DOWN(test_fifo_pop)
 {
 }
 
+TEST(test_fifo_pop, test_pop_basics)
+{
+    fifo_t * tmp_fifo = NULL;
+    uint8_t * tmp_data = NULL;
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_pop(tmp_fifo, tmp_data));
+}
+
 TEST(test_fifo_pop, test_pop_one_byte)
 {
     const uint8_t test_value = 0x5A;
@@ -53,4 +60,8 @@ TEST(test_fifo_pop, test_pop_full_buffer)
     TEST_ASSERT_EQUAL_HEX8(0x3C, data[2]);
     TEST_ASSERT_EQUAL_HEX8(0x2D, data[3]);
     TEST_ASSERT_EQUAL_HEX8(0x1E, data[4]);
+}
+
+TEST(test_fifo_pop, test_pop_multiple)
+{
 }
