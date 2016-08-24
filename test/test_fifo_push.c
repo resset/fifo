@@ -128,7 +128,7 @@ TEST(test_fifo_push, test_push_multiple_basics)
 {
     fifo_t * tmp_fifo = NULL;
     uint8_t * tmp_data = NULL;
-    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push_multiple(tmp_fifo, tmp_data, 0));
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push_multiple(tmp_fifo, tmp_data, 1));
 }
 
 TEST(test_fifo_push, test_push_multiple)

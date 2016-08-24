@@ -60,8 +60,32 @@ TEST(test_fifo_pop, test_pop_full_buffer)
     TEST_ASSERT_EQUAL_HEX8(0x3C, data[2]);
     TEST_ASSERT_EQUAL_HEX8(0x2D, data[3]);
     TEST_ASSERT_EQUAL_HEX8(0x1E, data[4]);
+
+    /* This should fail and shouldn't change data value. */
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_pop(&fifo, &data[0]));
+
+    TEST_ASSERT_EQUAL_HEX8(0x5A, data[0]);
+    TEST_ASSERT_EQUAL_HEX8(0x4B, data[1]);
+    TEST_ASSERT_EQUAL_HEX8(0x3C, data[2]);
+    TEST_ASSERT_EQUAL_HEX8(0x2D, data[3]);
+    TEST_ASSERT_EQUAL_HEX8(0x1E, data[4]);
+}
+
+TEST(test_fifo_pop, test_pop_multiple_basics)
+{
+    fifo_t * tmp_fifo = NULL;
+    uint8_t * tmp_data = NULL;
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_pop_multiple(tmp_fifo, tmp_data, 1));
 }
 
 TEST(test_fifo_pop, test_pop_multiple)
 {
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x5A));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x4B));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x3C));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x2D));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x1E));
+
+    uint8_t data[5];
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop_multiple(&fifo, data, 5));
 }
