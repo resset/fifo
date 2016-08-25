@@ -89,3 +89,28 @@ TEST(test_fifo_pop, test_pop_multiple)
     uint8_t data[5];
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop_multiple(&fifo, data, 5));
 }
+
+TEST(test_fifo_pop, test_pop_multiple_more_than_empty)
+{
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x5A));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x4B));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x3C));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x2D));
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x1E));
+
+    uint8_t data[5] = {0, 0, 0, 0, 0};
+    TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop_multiple(&fifo, data, 3));
+
+    /* This should fail. */
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_pop_multiple(&fifo, data, 3));
+
+    /* These should be untouched. */
+    TEST_ASSERT_EQUAL_HEX8(0x5A, data[0]);
+    TEST_ASSERT_EQUAL_HEX8(0x4B, data[1]);
+    TEST_ASSERT_EQUAL_HEX8(0x3C, data[2]);
+    TEST_ASSERT_EQUAL_HEX8(0, data[3]);
+    TEST_ASSERT_EQUAL_HEX8(0, data[4]);
+
+    /* And also the fifo should still have leftover data. */
+    TEST_ASSERT_EQUAL_UINT16(2, fifo.elements_n);
+}
