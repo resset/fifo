@@ -14,4 +14,5 @@ TEST_GROUP_RUNNER(test_fifo_push)
     RUN_TEST_CASE(test_fifo_push, test_push_multiple_overfill_buffer_when_full);
     RUN_TEST_CASE(test_fifo_push,
                   test_push_multiple_overfill_buffer_when_almost_full);
+    RUN_TEST_CASE(test_fifo_push, test_push_multiple_large_buffer);
 }

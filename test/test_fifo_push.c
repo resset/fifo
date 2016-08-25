@@ -202,3 +202,22 @@ TEST(test_fifo_push, test_push_multiple_overfill_buffer_when_almost_full)
     TEST_ASSERT_EQUAL_UINT8(data[1], fifo.buffer[1]);
     TEST_ASSERT_EQUAL_UINT8(data[2], fifo.buffer[2]);
 }
+
+TEST(test_fifo_push, test_push_multiple_large_buffer) {
+    fifo_t fifo;
+    const uint16_t SIZE = UINT16_MAX;
+    uint8_t buffer[SIZE];
+
+    if (FIFO_ERROR == fifo_init(&fifo, buffer, SIZE)) {
+        TEST_FAIL_MESSAGE("Error while initializing FIFO.");
+    }
+
+    for (uint16_t i = 0; i < UINT16_MAX; i++) {
+        TEST_ASSERT_TRUE(FIFO_SUCCESS ==
+                         fifo_push(&fifo, (uint8_t) (i & 0xFF)));
+    }
+
+    uint8_t data[] = {1, 4, 3, 8, 2, 5, 7, 6};
+
+    TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push_multiple(&fifo, data, 5));
+}
