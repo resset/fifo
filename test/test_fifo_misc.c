@@ -31,6 +31,10 @@ TEST(test_fifo_misc, test_count_elements)
 {
 }
 
+TEST(test_fifo_misc, test_find)
+{
+}
+
 TEST(test_fifo_misc, test_search)
 {
 }
