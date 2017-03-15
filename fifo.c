@@ -99,7 +99,7 @@ inline uint16_t fifo_count_elements(fifo_t * fifo)
     return fifo->elements_n;
 }
 
-fifo_result_t fifo_search(fifo_t * fifo, uint8_t data)
+fifo_result_t fifo_find(fifo_t * fifo, uint8_t data)
 {
     if (NULL != fifo) {
         for (uint16_t i = 0; fifo_count_elements(fifo) > i; ++i) {
