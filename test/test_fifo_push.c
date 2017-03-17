@@ -23,7 +23,7 @@ TEST_TEAR_DOWN(test_fifo_push)
 
 TEST(test_fifo_push, test_push_basics)
 {
-    fifo_t * tmp_fifo = NULL;
+    fifo_t *tmp_fifo = NULL;
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push(tmp_fifo, 0));
 }
 
@@ -126,14 +126,14 @@ TEST(test_fifo_push, test_push_fill_buffer_not_from_zero_index)
 
 TEST(test_fifo_push, test_push_multiple_basics)
 {
-    fifo_t * tmp_fifo = NULL;
-    uint8_t * tmp_data = NULL;
+    fifo_t *tmp_fifo = NULL;
+    uint8_t *tmp_data = NULL;
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push_multiple(tmp_fifo, tmp_data, 1));
 }
 
 TEST(test_fifo_push, test_push_multiple)
 {
-    uint8_t data[] = {8, 7, 6, 5, 4, 3, 2, 1};
+    uint8_t data[] = { 8, 7, 6, 5, 4, 3, 2, 1 };
 
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push_multiple(&fifo, data, 2));
 
@@ -153,7 +153,7 @@ TEST(test_fifo_push, test_push_multiple)
 
 TEST(test_fifo_push, test_push_multiple_overfill_buffer_when_full)
 {
-    uint8_t data[] = {3, 7, 6, 2, 5, 4, 1, 8};
+    uint8_t data[] = { 3, 7, 6, 2, 5, 4, 1, 8 };
 
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push_multiple(&fifo, data, 5));
 
@@ -181,7 +181,7 @@ TEST(test_fifo_push, test_push_multiple_overfill_buffer_when_full)
 
 TEST(test_fifo_push, test_push_multiple_overfill_buffer_when_almost_full)
 {
-    uint8_t data[] = {6, 4, 8, 1, 5, 7, 2, 3};
+    uint8_t data[] = { 6, 4, 8, 1, 5, 7, 2, 3 };
 
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push_multiple(&fifo, data, 3));
 
@@ -203,7 +203,8 @@ TEST(test_fifo_push, test_push_multiple_overfill_buffer_when_almost_full)
     TEST_ASSERT_EQUAL_UINT8(data[2], fifo.buffer[2]);
 }
 
-TEST(test_fifo_push, test_push_multiple_large_buffer) {
+TEST(test_fifo_push, test_push_multiple_large_buffer)
+{
     fifo_t fifo;
     const uint16_t SIZE = UINT16_MAX;
     uint8_t buffer[SIZE];
@@ -217,7 +218,7 @@ TEST(test_fifo_push, test_push_multiple_large_buffer) {
                          fifo_push(&fifo, (uint8_t) (i & 0xFF)));
     }
 
-    uint8_t data[] = {1, 4, 3, 8, 2, 5, 7, 6};
+    uint8_t data[] = { 1, 4, 3, 8, 2, 5, 7, 6 };
 
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_push_multiple(&fifo, data, 5));
 }

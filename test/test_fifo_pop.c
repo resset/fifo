@@ -23,8 +23,8 @@ TEST_TEAR_DOWN(test_fifo_pop)
 
 TEST(test_fifo_pop, test_pop_basics)
 {
-    fifo_t * tmp_fifo = NULL;
-    uint8_t * tmp_data = NULL;
+    fifo_t *tmp_fifo = NULL;
+    uint8_t *tmp_data = NULL;
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_pop(tmp_fifo, tmp_data));
 }
 
@@ -73,8 +73,8 @@ TEST(test_fifo_pop, test_pop_full_buffer)
 
 TEST(test_fifo_pop, test_pop_multiple_basics)
 {
-    fifo_t * tmp_fifo = NULL;
-    uint8_t * tmp_data = NULL;
+    fifo_t *tmp_fifo = NULL;
+    uint8_t *tmp_data = NULL;
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_pop_multiple(tmp_fifo, tmp_data, 1));
 }
 
@@ -98,7 +98,7 @@ TEST(test_fifo_pop, test_pop_multiple_more_than_empty)
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x2D));
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_push(&fifo, 0x1E));
 
-    uint8_t data[5] = {0, 0, 0, 0, 0};
+    uint8_t data[5] = { 0, 0, 0, 0, 0 };
     TEST_ASSERT_TRUE(FIFO_SUCCESS == fifo_pop_multiple(&fifo, data, 3));
 
     /* This should fail. */

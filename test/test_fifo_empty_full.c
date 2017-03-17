@@ -23,7 +23,7 @@ TEST_TEAR_DOWN(test_fifo_empty_full)
 
 TEST(test_fifo_empty_full, test_empty_full_basics)
 {
-    fifo_t * tmp_fifo = NULL;
+    fifo_t *tmp_fifo = NULL;
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_is_empty(tmp_fifo));
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_is_full(tmp_fifo));
 }
