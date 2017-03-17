@@ -26,5 +26,7 @@ fifo_result_t fifo_is_empty(fifo_t * fifo);
 fifo_result_t fifo_is_full(fifo_t * fifo);
 uint16_t fifo_count_elements(fifo_t * fifo);
 fifo_result_t fifo_find(fifo_t * fifo, uint8_t data);
+fifo_result_t fifo_search(fifo_t * fifo, uint8_t * pattern,
+                          uint16_t pattern_size, uint16_t * position);
 
 #endif /* _FIFO_H_ */

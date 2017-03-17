@@ -32,7 +32,8 @@ fifo_result_t fifo_push_multiple(fifo_t * fifo, uint8_t * data, uint16_t size)
 {
     if (NULL != fifo && NULL != data && fifo->elements_n + size <= fifo->size) {
         while (size--) {
-            fifo->buffer[(fifo->first + fifo->elements_n) % fifo->size] = *data++;
+            fifo->buffer[(fifo->first + fifo->elements_n) % fifo->size] =
+                *data++;
             ++fifo->elements_n;
         }
         return FIFO_SUCCESS;
@@ -108,6 +109,19 @@ fifo_result_t fifo_find(fifo_t * fifo, uint8_t data)
             }
         }
 
+        return FIFO_FALSE;
+    } else {
+        return FIFO_ERROR;
+    }
+}
+
+fifo_result_t fifo_search(fifo_t * fifo, uint8_t * pattern,
+                          uint16_t pattern_size, uint16_t * position)
+{
+    (void)pattern;
+    (void)pattern_size;
+    (void)position;
+    if (NULL != fifo && NULL != pattern) {
         return FIFO_FALSE;
     } else {
         return FIFO_ERROR;
