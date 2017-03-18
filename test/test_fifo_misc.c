@@ -58,49 +58,49 @@ TEST(test_fifo_misc, test_search)
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_search(&fifo, NULL, 2, NULL));
 
     /* Search for first byte. */
-    TEST_ASSERT_TRUE(FIFO_SUCCESS ==
+    TEST_ASSERT_TRUE(FIFO_TRUE ==
                      fifo_search(&fifo, (uint8_t *) "t", 1, &tmp_index));
     if (0 != tmp_index) {
         TEST_FAIL();
     }
 
     /* Search for last byte. */
-    TEST_ASSERT_TRUE(FIFO_SUCCESS ==
+    TEST_ASSERT_TRUE(FIFO_TRUE ==
                      fifo_search(&fifo, (uint8_t *) "\n", 1, &tmp_index));
     if (7 != tmp_index) {
         TEST_FAIL();
     }
 
     /* Search for middle byte. */
-    TEST_ASSERT_TRUE(FIFO_SUCCESS ==
+    TEST_ASSERT_TRUE(FIFO_TRUE ==
                      fifo_search(&fifo, (uint8_t *) "s", 1, &tmp_index));
     if (2 != tmp_index) {
         TEST_FAIL();
     }
 
     /* Search for beginning sequence. */
-    TEST_ASSERT_TRUE(FIFO_SUCCESS ==
+    TEST_ASSERT_TRUE(FIFO_TRUE ==
                      fifo_search(&fifo, (uint8_t *) "tes", 3, &tmp_index));
     if (0 != tmp_index) {
         TEST_FAIL();
     }
 
     /* Search for some middle sequence. */
-    TEST_ASSERT_TRUE(FIFO_SUCCESS ==
+    TEST_ASSERT_TRUE(FIFO_TRUE ==
                      fifo_search(&fifo, (uint8_t *) "es", 2, &tmp_index));
     if (1 != tmp_index) {
         TEST_FAIL();
     }
 
     /* Search for ending sequence. */
-    TEST_ASSERT_TRUE(FIFO_SUCCESS ==
+    TEST_ASSERT_TRUE(FIFO_TRUE ==
                      fifo_search(&fifo, (uint8_t *) "ting\n", 3, &tmp_index));
     if (3 != tmp_index) {
         TEST_FAIL();
     }
 
     /* Search for short pattern. */
-    TEST_ASSERT_TRUE(FIFO_SUCCESS ==
+    TEST_ASSERT_TRUE(FIFO_TRUE ==
                      fifo_search(&fifo, pattern, 3, &tmp_index));
     if (4 != tmp_index) {
         TEST_FAIL();
@@ -108,4 +108,12 @@ TEST(test_fifo_misc, test_search)
 
     /* Search for pattern longer than fifo itself shoul fail. */
     TEST_ASSERT_TRUE(FIFO_ERROR == fifo_search(&fifo, long_pattern, 12, NULL));
+
+    /* Search for non-existent sequence. */
+    TEST_ASSERT_TRUE(FIFO_FALSE ==
+                     fifo_search(&fifo, (uint8_t *) "abc", 3, &tmp_index));
+
+    /* Search for nothing. */
+    TEST_ASSERT_TRUE(FIFO_ERROR ==
+                     fifo_search(&fifo, (uint8_t *) "abc", 0, &tmp_index));
 }
