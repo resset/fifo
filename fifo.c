@@ -19,7 +19,7 @@ fifo_result_t fifo_init(fifo_t * fifo, uint8_t * buffer, uint16_t size)
 
 fifo_result_t fifo_push(fifo_t * fifo, uint8_t data)
 {
-    if (NULL != fifo && FIFO_FALSE == fifo_is_full(fifo)) {
+    if (NULL != fifo && fifo->size != fifo->elements_n) {
         fifo->buffer[(fifo->first + fifo->elements_n) % fifo->size] = data;
         ++fifo->elements_n;
         return FIFO_SUCCESS;
@@ -44,7 +44,7 @@ fifo_result_t fifo_push_multiple(fifo_t * fifo, uint8_t * data, uint16_t size)
 
 fifo_result_t fifo_pop(fifo_t * fifo, uint8_t * data)
 {
-    if (NULL != fifo && FIFO_FALSE == fifo_is_empty(fifo)) {
+    if (NULL != fifo && 0 != fifo->elements_n) {
         *data = fifo->buffer[fifo->first];
         fifo->first = (fifo->first + 1) % fifo->size;
         --fifo->elements_n;
