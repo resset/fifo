@@ -44,6 +44,7 @@ CFLAGS += -Wold-style-definition
 CFLAGS += -Wmissing-prototypes
 CFLAGS += -Wmissing-declarations
 CFLAGS += -Wpedantic
+CFLAGS += -g
 CFLAGS += -DUNITY_FIXTURES
 
 TARGET_BASE1=all_tests
