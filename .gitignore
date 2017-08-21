@@ -1,6 +1,7 @@
 *~
 *.d
 *.o
+.vscode
 test/Unity
 test/legacy/test_naive
 test/all_tests.out
